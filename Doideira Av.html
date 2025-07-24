@@ -4,16 +4,80 @@
   <meta charset="UTF-8">
   <title>Chat Interativo</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; background-image: url("https://cdn.wallpapersafari.com/48/54/A49vH3.jpg");
-;}
-    #chat { border: 1px solid #000000; padding: 10px; margin-top: 10px; }
-    .msg { margin: 10px 0; }
-    .user { color: rgb(244, 244, 247); }
-    .bot { color: rgb(245, 243, 243); }
-    .opcoes button { margin-right: 10px; margin-top: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      background-image: url("https://cdn.wallpapersafari.com/48/54/A49vH3.jpg");
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+      background: rgba(0,0,0,0.6);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    #chat {
+      border: 1px solid #000;
+      padding: 10px;
+      margin-top: 10px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .msg {
+      margin: 10px 0;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+
+    .user {
+      color: #ffdb58;
+    }
+
+    .bot {
+      color: #add8e6;
+    }
+
+    .opcoes button {
+      margin-right: 10px;
+      margin-top: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 90px);
+      padding: 5px;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    button {
+      padding: 6px 12px;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: none;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
   </style>
 </head>
-<body
+<body>
   <h2>Chat Doideira</h2>
   <div id="chat">
     <div class="msg bot">Qual o seu nome?</div>
@@ -32,6 +96,7 @@
       if (!texto) return;
 
       chat.innerHTML += `<div class="msg user">${texto}</div>`;
+      chat.scrollTop = chat.scrollHeight;
 
       if (etapa === 0) {
         nome = texto;
@@ -40,6 +105,7 @@
           chat.innerHTML += `<div class="msg bot">Você é jovem?</div>`;
           mostrarOpcoes(['Sim', 'Não']);
           etapa++;
+          chat.scrollTop = chat.scrollHeight;
         }, 500);
       } else if (etapa === 1) {
         if (texto.toLowerCase() === "não") {
@@ -53,11 +119,10 @@
       } else if (etapa === 2) {
         if (texto.toLowerCase() === "não") {
           chat.innerHTML += `<div class="msg bot">Tudo bem, até mais!</div>`;
-          finalizar();
         } else {
           chat.innerHTML += `<div class="msg bot">Os Adoradores já venceram esse doideira.</div>`;
-          finalizar();
         }
+        finalizar();
       }
 
       input.value = "";
@@ -80,6 +145,7 @@
       });
 
       document.getElementById('chat').appendChild(container);
+      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     }
 
     function finalizar() {
